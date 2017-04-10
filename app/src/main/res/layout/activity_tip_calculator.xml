@@ -34,7 +34,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_below="@+id/billAmountEditText"
-        android:layout_alignBottom="@id/tipPercentDownButton"
+        android:layout_alignBottom="@+id/tipPercentDownButton"
         android:gravity="center"
         android:padding= "10dp"/>
 
@@ -47,7 +47,7 @@
         android:textStyle="bold"
         android:layout_below="@id/billAmountEditText"
         android:layout_toRightOf="@id/percentLabelTextView"
-        android:layout_alignBottom="@id/tipPercentDownButton"
+        android:layout_alignBottom="@+id/tipPercentDownButton"
         android:gravity="center"
         android:padding="10dp"
         android:layout_alignEnd="@id/tipPercentAmountTextView"/>
