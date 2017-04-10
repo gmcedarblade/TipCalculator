@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context="edu.cvtc.android.tipcalculator_gcedarblade.TipCalculator">
 
     <TextView
@@ -11,81 +12,112 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bill Amount"
+        android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="25dp" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/billAmountEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:inputType="numberDecimal"
+        android:textSize="24sp"
+        android:layout_toEndOf="@+id/billAmountTextView"
+        android:layout_alignTop="@id/billAmountTextView" />
 
     <TextView
         android:id="@+id/percentLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Percent"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="91dp" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/billAmountEditText"
+        android:layout_alignBottom="@id/tipPercentDownButton"
+        android:gravity="center"
+        android:padding= "10dp"/>
 
     <TextView
         android:id="@+id/tipPercentAmountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="91dp" />
+        android:text="15%"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/billAmountEditText"
+        android:layout_toRightOf="@id/percentLabelTextView"
+        android:layout_alignBottom="@id/tipPercentDownButton"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_alignEnd="@id/tipPercentAmountTextView"/>
 
     <Button
         android:id="@+id/tipPercentDownButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:text="-"
-        tools:layout_editor_absoluteX="175dp"
-        tools:layout_editor_absoluteY="74dp" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/billAmountEditText"
+        android:layout_toStartOf="@+id/tipPercentUpButton" />
 
     <Button
         android:id="@+id/tipPercentUpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/billAmountEditText"
         android:text="+"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="74dp" />
+        android:textSize="20sp"
+        android:layout_alignEnd="@id/billAmountEditText"
+        android:layout_alignRight="@id/billAmountEditText"/>
 
     <TextView
         android:id="@+id/tipLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tip"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="152dp" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/tipPercentUpButton"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_alignEnd="@id/percentLabelTextView"/>
 
     <TextView
         android:id="@+id/tipAmountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$0.00"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="152dp" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/tipLabelTextView"
+        android:layout_below="@id/tipPercentUpButton"
+        android:padding="10dp"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/totalLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="219dp" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/tipAmountTextView"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_alignEnd="@id/tipLabelTextView"/>
 
     <TextView
         android:id="@+id/totalAmountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$0.00"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="219dp" />
-</android.support.constraint.ConstraintLayout>
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/totalLabelTextView"
+        android:layout_below="@id/tipAmountTextView"
+        android:padding="10dp"/>
+
+
+</RelativeLayout>
