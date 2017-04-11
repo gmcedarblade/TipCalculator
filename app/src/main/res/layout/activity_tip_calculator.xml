@@ -24,7 +24,8 @@
         android:inputType="numberDecimal"
         android:textSize="24sp"
         android:layout_toEndOf="@+id/billAmountTextView"
-        android:layout_alignTop="@id/billAmountTextView" />
+        android:layout_alignTop="@id/billAmountTextView"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/percentLabelTextView"
