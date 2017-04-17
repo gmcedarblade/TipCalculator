@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">TipCalculator_gcedarblade</string>
+    <string name="bill_amount">Bill Amount</string>
+    <string name="percent">Percent</string>
+    <string name="_15">15%</string>
+    <string name="minusSign">-</string>
+    <string name="positiveSign">+</string>
+    <string name="tip">Tip</string>
+    <string name="zeroDollars">$0.00</string>
+    <string name="total">Total</string>
+    <string name="zeroDollarsTotal">$0.00</string>
 </resources>
