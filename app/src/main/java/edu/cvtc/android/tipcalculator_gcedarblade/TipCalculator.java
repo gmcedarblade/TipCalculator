@@ -2,6 +2,7 @@ package edu.cvtc.android.tipcalculator_gcedarblade;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.icu.text.NumberFormat;
 import android.os.Build;
@@ -10,9 +11,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,12 +30,12 @@ public class TipCalculator extends Activity
     private EditText billAmountEditText;
     private TextView tipPercentTextView;
 
-    private Button tipPercentUpButton;
-    private Button tipPercentDownButton;
+    private SeekBar percentSeekBar;
 
     private TextView tipAmountTextView;
     private TextView totalAmountTextView;
 
+    private RadioGroup roundingRadioGroup;
     private RadioButton roundNoneRadioButton;
     private RadioButton roundTipRadioButton;
     private RadioButton roundTotalRadioButton;
@@ -44,14 +45,19 @@ public class TipCalculator extends Activity
     private TextView perPersonLabelTextView;
     private TextView perPersonAmountLabelTextView;
 
-    private Button applyButton;
-
     // shared preferences
     private SharedPreferences savedValues;
+
+    // rounding constants
+    private final int ROUND_NONE = 0;
+    private final int ROUND_TIP = 1;
+    private final int ROUND_TOTAL = 2;
 
     // instance variables
     private String billAmountString = "";
     private float tipPercent = .15f;
+    private int rounding = ROUND_NONE;
+    private int split = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +69,11 @@ public class TipCalculator extends Activity
         // references to widgets
         billAmountEditText = (EditText) findViewById(R.id.billAmountEditText);
         tipPercentTextView = (TextView) findViewById(R.id.tipPercentAmountTextView);
-        tipPercentUpButton  = (Button) findViewById(R.id.tipPercentUpButton);
-        tipPercentDownButton = (Button) findViewById(R.id.tipPercentDownButton);
+        percentSeekBar = (SeekBar) findViewById(R.id.percentSeekBar);
         tipAmountTextView = (TextView) findViewById(R.id.tipAmountTextView);
         totalAmountTextView = (TextView) findViewById(R.id.totalAmountTextView);
 
+        roundingRadioGroup = (RadioGroup) findViewById(R.id.roundingRadioGroup);
         roundNoneRadioButton = (RadioButton) findViewById(R.id.noneRadioButton);
         roundTipRadioButton = (RadioButton) findViewById(R.id.tipRadioButton);
         roundTotalRadioButton = (RadioButton) findViewById(R.id.totalRadioButton);
@@ -81,17 +87,18 @@ public class TipCalculator extends Activity
 
         // array adapter for spinner
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.split_array, android.R.layout.simple_spinner_item
-        );
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.split_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         splitSpinner.setAdapter(adapter);
 
         // Listeners
         billAmountEditText.setOnEditorActionListener(this);
-        tipPercentUpButton.setOnClickListener(this);
-        tipPercentDownButton.setOnClickListener(this);
-        applyButton.setOnClickListener(this);
+        billAmountEditText.setOnKeyListener(this);
+        percentSeekBar.setOnSeekBarChangeListener(this);
+        percentSeekBar.setOnKeyListener(this);
+        roundingRadioGroup.setOnCheckedChangeListener(this);
+        roundingRadioGroup.setOnKeyListener(this);
+        splitSpinner.setOnItemSelectedListener(this);
 
         // get SharedPreferences object
         savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
@@ -104,6 +111,8 @@ public class TipCalculator extends Activity
         SharedPreferences.Editor editor = savedValues.edit();
         editor.putString("billAmountString", billAmountString);
         editor.putFloat("tipPercent", tipPercent);
+        editor.putInt("rounding", rounding);
+        editor.putInt("split", split);
         editor.apply();
 
         super.onPause();
@@ -116,12 +125,29 @@ public class TipCalculator extends Activity
         // get the instance variables
         billAmountString = savedValues.getString("billAmountString", "");
         tipPercent = savedValues.getFloat("tipPercent", 0.15f);
+        rounding = savedValues.getInt("rounding", ROUND_NONE);
+        split = savedValues.getInt("split", 1);
 
         // set the bill amount on its widget
         billAmountEditText.setText(billAmountString);
 
-        // calculate and display
-        calculateAndDisplay();
+        // set tip percent on its widget
+        int progress = Math.round(tipPercent * 100);
+        percentSeekBar.setProgress(progress);
+
+        // set rounding on radio buttons
+        if (rounding == ROUND_NONE) {
+            roundNoneRadioButton.setChecked(true);
+        } else if (rounding == ROUND_TIP) {
+            roundTipRadioButton.setChecked(true);
+        } else if (rounding == ROUND_TOTAL) {
+            roundTotalRadioButton.setChecked(true);
+        }
+
+        // set split on spinner
+        int position = split - 1;
+        splitSpinner.setSelection(position);
+
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -136,32 +162,34 @@ public class TipCalculator extends Activity
             billAmount = Float.parseFloat(billAmountString);
         }
 
+        // get tip percent
+        int progress = percentSeekBar.getProgress();
+        tipPercent = (float) progress / 100;
+
         // calculate tip and total amount
         float tipAmount = 0;
         float totalAmount = 0;
 
-        if (roundNoneRadioButton.isChecked()) {
+        if (rounding == ROUND_NONE) {
             tipAmount = billAmount * tipPercent;
             totalAmount = billAmount + tipAmount;
-        } else if (roundTipRadioButton.isChecked()) {
+        } else if (rounding == ROUND_TIP) {
             tipAmount = StrictMath.round(billAmount * tipPercent);
             totalAmount = billAmount + tipAmount;
-        } else if (roundTotalRadioButton.isChecked()) {
+        } else if (rounding == ROUND_TOTAL) {
             float tipNotRounded = billAmount * tipPercent;
             totalAmount = StrictMath.round(billAmount + tipNotRounded);
             tipAmount = totalAmount - billAmount;
         }
 
-        // split amount and show/hide split amount widgets
-        int splitPosition = splitSpinner.getSelectedItemPosition();
-        int split = splitPosition + 1;
-        float perPersonAmount = 0;
-        if (split == 1) {  // no split - hide widgets
+        // calculate the split amount and show/hide split amount widgets
+        float splitAmount = 0;
+        if (split == 1) {
             perPersonLabelTextView.setVisibility(View.GONE);
             perPersonAmountLabelTextView.setVisibility(View.GONE);
-        } else { // split - show widgets
-            perPersonAmount = totalAmount / split;
-            perPersonLabelTextView.setVisibility(View.VISIBLE);
+        } else {
+            splitAmount = totalAmount / split;
+            perPersonAmountLabelTextView.setVisibility(View.VISIBLE);
             perPersonAmountLabelTextView.setVisibility(View.VISIBLE);
         }
 
@@ -169,13 +197,15 @@ public class TipCalculator extends Activity
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         tipAmountTextView.setText(currency.format(tipAmount));
         totalAmountTextView.setText(currency.format(totalAmount));
-        perPersonAmountLabelTextView.setText(currency.format(perPersonAmount));
+        perPersonAmountLabelTextView.setText(currency.format(splitAmount));
 
         NumberFormat percent  = NumberFormat.getPercentInstance();
         tipPercentTextView.setText(percent.format(tipPercent));
 
     }
 
+
+    // event handler for EditText
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
@@ -187,54 +217,95 @@ public class TipCalculator extends Activity
 
     }
 
-    @Override
-    public void onClick(View view) {
-
-        switch (view.getId()) {
-            case R.id.tipPercentDownButton:
-                tipPercent = tipPercent - .01f;
-                calculateAndDisplay();
-                break;
-            case  R.id.tipPercentUpButton:
-                tipPercent = tipPercent + .01f;
-                calculateAndDisplay();
-                break;
-        }
-
-    }
-
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        return false;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-    }
-
+    // event handler for SeekBar
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
 
     }
 
     @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        tipPercentTextView.setText(progress + "&");
 
     }
+
+
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+        calculateAndDisplay();
+
+    }
+
+    // event handler for the RadioGroup
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+
+        switch(checkedId) {
+            case R.id.noneRadioButton:
+                rounding = ROUND_NONE;
+                break;
+            case R.id.tipRadioButton:
+                rounding = ROUND_TIP;
+                break;
+            case R.id.totalRadioButton:
+                rounding = ROUND_TOTAL;
+                break;
+        }
+
+        calculateAndDisplay();
+
+    }
+
+    // event handler for the keyboard and DPad
+    @Override
+    public boolean onKey(View view, int keyCode, KeyEvent event) {
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        switch (keyCode) {
+
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                calculateAndDisplay();
+                imm.hideSoftInputFromWindow(billAmountEditText.getWindowToken(), 0);
+                return true;
+
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                calculateAndDisplay();
+                imm.hideSoftInputFromWindow(billAmountEditText.getWindowToken(), 0);
+                break;
+
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                if (view.getId() == R.id.percentSeekBar) {
+                    calculateAndDisplay();
+                }
+                break;
+
+        }
+        return false;
+
+    }
+
+    // event handler for the Spinner
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        split = position + 1;
+        calculateAndDisplay();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Do nothing
+    }
+
+
+
+
 }

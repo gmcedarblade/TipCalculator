@@ -108,7 +108,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:layout_gravity="l"
             android:layout_below="@+id/tipPercentAmountTextView"
             android:layout_toEndOf="@+id/splitLabelTextView" />
 
@@ -222,10 +221,8 @@
             android:id="@+id/splitBillSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/splitLabelTextView"
-            android:layout_alignStart="@+id/billAmountEditText"
-            android:layout_above="@+id/perPersonLabelTextView"
-            android:layout_alignEnd="@+id/roundingRadioGroup" />
+            android:layout_below="@+id/roundingRadioGroup"
+            android:layout_alignStart="@+id/roundingRadioGroup" />
 
         <TextView
             android:id="@+id/perPersonLabelTextView"
@@ -235,9 +232,8 @@
             android:text="@string/per_person"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_alignLeft="@+id/splitLabelTextView"
             android:layout_below="@+id/splitLabelTextView"
-            />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/perPersonAmountLabelTextView"
@@ -246,9 +242,7 @@
             android:padding="5dp"
             android:text="@string/zeroDollarsPerPerson"
             android:textSize="20sp"
-            android:layout_alignBaseline="@+id/perPersonLabelTextView"
-            android:layout_alignBottom="@+id/perPersonLabelTextView"
-            android:layout_alignEnd="@+id/splitBillSpinner"
+            android:layout_alignTop="@+id/perPersonLabelTextView"
             android:layout_toEndOf="@+id/perPersonLabelTextView" />
         <!-- END Split Bill -->
 

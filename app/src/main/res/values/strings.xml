@@ -13,6 +13,12 @@
     <string name="noneRadioButtonText">None</string>
     <string name="tipRadioButtonText">Tip</string>
     <string name="totalRadioButtonText">Total</string>
+    <string-array name="split_array">
+        <item>No</item>
+        <item>2 ways</item>
+        <item>3 ways</item>
+        <item>4 ways</item>
+    </string-array>
     <string name="split_bill">Split Bill?</string>
     <string name="per_person">Per Person</string>
     <string name="zeroDollarsPerPerson">$0.00</string>
