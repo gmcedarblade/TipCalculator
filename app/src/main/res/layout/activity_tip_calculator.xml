@@ -7,97 +7,125 @@
     android:padding="16dp"
     tools:context="edu.cvtc.android.tipcalculator_gcedarblade.TipCalculator">
 
-    <TextView
-        android:id="@+id/billAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bill_amount"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:textSize="24sp" />
+    <!-- Bill Amount -->
+    <TableRow>
+        <TextView
+            android:id="@+id/billAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bill_amount"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/billAmountEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:textSize="24sp"
-        android:gravity="center"/>
+        <EditText
+            android:id="@+id/billAmountEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_span="3" >
 
-    <TextView
-        android:id="@+id/percentLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/percent"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:padding= "10dp"/>
+            <requestFocus/>
 
-    <TextView
-        android:id="@+id/tipPercentAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_15"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:padding="10dp"/>
+        </EditText>
 
-    <Button
-        android:id="@+id/tipPercentDownButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="@string/minusSign"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    </TableRow>
+    <!-- END BIll Amount -->
+    <!-- Tip Percent -->
+    <TableRow>
 
-    <Button
-        android:id="@+id/tipPercentUpButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="@string/positiveSign"
-        android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/percentLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/percent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding= "10dp"/>
 
-    <TextView
-        android:id="@+id/tipLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tip"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:gravity="center"/>
+        <TextView
+            android:id="@+id/tipPercentAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_15"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="10dp"/>
 
-    <TextView
-        android:id="@+id/tipAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/zeroDollars"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:gravity="center"/>
+        <Button
+            android:id="@+id/tipPercentDownButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="@string/minusSign"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/totalLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/total"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:gravity="center"/>
+        <Button
+            android:id="@+id/tipPercentUpButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="@string/positiveSign"
+            android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/totalAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/zeroDollarsTotal"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="10dp"/>
+    </TableRow>
+    <!-- END Tip Percent -->
+
+    <!-- Tip Amount -->
+    <TableRow>
+
+        <TextView
+            android:id="@+id/tipLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tip"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tipAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zeroDollars"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_gravity="left"
+            android:layout_span="3"/>
+
+    </TableRow>
+    <!-- END Tip Amount -->
+
+    <!-- Total -->
+    <TableRow>
+
+        <TextView
+            android:id="@+id/totalLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/totalAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zeroDollarsTotal"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_span="3"/>
+
+    </TableRow>
 
 
 </TableLayout>
