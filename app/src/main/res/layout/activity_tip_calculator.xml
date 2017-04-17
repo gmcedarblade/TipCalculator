@@ -96,7 +96,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:layout_gravity="left"
+            android:layout_gravity="l"
             android:layout_span="3"/>
 
     </TableRow>
@@ -126,6 +126,104 @@
             android:layout_span="3"/>
 
     </TableRow>
+    <!-- END Total -->
+
+    <!-- Separator Line -->
+    <View
+        android:id="@+id/separatorLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="5dp"
+        android:background="@android:color/black" />
+    <!-- END Separator Line -->
+
+    <!-- Rounding -->
+
+    <TextView
+        android:id="@+id/roundingLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rounding"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:gravity="center"
+        />
+
+    <RadioGroup
+        android:id="@+id/roundingRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <RadioButton
+            android:id="@+id/noneRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/noneRadioButtonText"
+            />
+
+        <RadioButton
+            android:id="@+id/tipRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tipRadioButtonText"
+            />
+
+        <RadioButton
+            android:id="@+id/totalRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/totalRadioButtonText"
+            />
+
+    </RadioGroup>
+    <!-- END Rounding -->
+    <!-- Split Bill -->
+    <TextView
+        android:id="@+id/splitLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/split_bill"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        />
+
+    <Spinner
+        android:id="@+id/splitBillSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/perPersonLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/per_person"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/perPersonAmountLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/zeroDollarsPerPerson"
+        android:textSize="20sp"
+        />
+    <!-- END Split Bill -->
+
+    <!-- Apply Button -->
+
+    <Button
+        android:id="@+id/applyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/applyPerPerson"
+        />
 
 
 </TableLayout>

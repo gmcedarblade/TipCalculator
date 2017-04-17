@@ -9,4 +9,12 @@
     <string name="zeroDollars">$0.00</string>
     <string name="total">Total</string>
     <string name="zeroDollarsTotal">$0.00</string>
+    <string name="rounding">Rounding</string>
+    <string name="noneRadioButtonText">None</string>
+    <string name="tipRadioButtonText">Tip</string>
+    <string name="totalRadioButtonText">Total</string>
+    <string name="split_bill">Split Bill?</string>
+    <string name="per_person">Per Person</string>
+    <string name="zeroDollarsPerPerson">$0.00</string>
+    <string name="applyPerPerson">Apply</string>
 </resources>
