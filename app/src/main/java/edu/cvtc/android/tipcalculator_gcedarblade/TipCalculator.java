@@ -1,25 +1,29 @@
 package edu.cvtc.android.tipcalculator_gcedarblade;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.icu.text.NumberFormat;
 import android.os.Build;
-import android.support.v4.app.SharedElementCallback;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.IdRes;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
-public class TipCalculator extends AppCompatActivity implements TextView.OnEditorActionListener, View.OnClickListener {
+public class TipCalculator extends Activity
+        implements TextView.OnEditorActionListener, SeekBar.OnSeekBarChangeListener,
+        RadioGroup.OnCheckedChangeListener, AdapterView.OnItemSelectedListener, View.OnKeyListener {
 
     // widgets
     private EditText billAmountEditText;
@@ -73,7 +77,7 @@ public class TipCalculator extends AppCompatActivity implements TextView.OnEdito
         perPersonLabelTextView = (TextView) findViewById(R.id.perPersonLabelTextView);
         perPersonAmountLabelTextView = (TextView) findViewById(R.id.perPersonAmountLabelTextView);
 
-        applyButton = (Button) findViewById(R.id.applyButton);
+
 
         // array adapter for spinner
 
@@ -89,7 +93,7 @@ public class TipCalculator extends AppCompatActivity implements TextView.OnEdito
         tipPercentDownButton.setOnClickListener(this);
         applyButton.setOnClickListener(this);
 
-        // get SharedPerferences object
+        // get SharedPreferences object
         savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
 
     }
@@ -196,6 +200,41 @@ public class TipCalculator extends AppCompatActivity implements TextView.OnEdito
                 calculateAndDisplay();
                 break;
         }
+
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        return false;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
 }

@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context="edu.cvtc.android.tipcalculator_gcedarblade.TipCalculator">
 
-    <!-- Bill Amount -->
-    <TableRow>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <!-- Bill Amount -->
+
         <TextView
             android:id="@+id/billAmountTextView"
             android:layout_width="wrap_content"
@@ -16,7 +21,9 @@
             android:text="@string/bill_amount"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="20sp"
+            android:paddingBottom="20dp"
+            android:gravity="center"/>
 
         <EditText
             android:id="@+id/billAmountEditText"
@@ -26,16 +33,19 @@
             android:inputType="numberDecimal"
             android:textSize="24sp"
             android:gravity="center"
-            android:layout_span="3" >
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/billAmountTextView"
+            android:layout_alignBaseline="@+id/billAmountTextView"
+             >
 
             <requestFocus/>
 
         </EditText>
 
-    </TableRow>
-    <!-- END BIll Amount -->
-    <!-- Tip Percent -->
-    <TableRow>
+
+        <!-- END BIll Amount -->
+        <!-- Tip Percent -->
+
 
         <TextView
             android:id="@+id/percentLabelTextView"
@@ -45,7 +55,10 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:padding= "10dp"/>
+            android:padding= "10dp"
+            android:layout_alignLeft="@+id/billAmountTextView"
+            android:layout_below="@+id/billAmountTextView"
+            />
 
         <TextView
             android:id="@+id/tipPercentAmountTextView"
@@ -55,28 +68,25 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:layout_below="@+id/billAmountTextView"
+            android:layout_toEndOf="@+id/roundingLabelTextView" />
 
-        <Button
-            android:id="@+id/tipPercentDownButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="@string/minusSign"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        <SeekBar
+            android:id="@+id/percentSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/percentLabelTextView"
+            android:max="30"
+            android:padding="10dp"
+            android:progress="15"
+            android:layout_toEndOf="@+id/totalAmountTextView"
+            android:layout_above="@+id/tipAmountTextView" />
 
-        <Button
-            android:id="@+id/tipPercentUpButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="@string/positiveSign"
-            android:textSize="20sp"/>
+        <!-- END Tip Percent -->
 
-    </TableRow>
-    <!-- END Tip Percent -->
-
-    <!-- Tip Amount -->
-    <TableRow>
+        <!-- Tip Amount -->
 
         <TextView
             android:id="@+id/tipLabelTextView"
@@ -86,7 +96,9 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_alignLeft="@+id/percentLabelTextView"
+            android:layout_below="@+id/percentLabelTextView"/>
 
         <TextView
             android:id="@+id/tipAmountTextView"
@@ -97,13 +109,14 @@
             android:textStyle="bold"
             android:padding="10dp"
             android:layout_gravity="l"
-            android:layout_span="3"/>
+            android:layout_below="@+id/tipPercentAmountTextView"
+            android:layout_toEndOf="@+id/splitLabelTextView" />
 
-    </TableRow>
-    <!-- END Tip Amount -->
 
-    <!-- Total -->
-    <TableRow>
+        <!-- END Tip Amount -->
+
+        <!-- Total -->
+
 
         <TextView
             android:id="@+id/totalLabelTextView"
@@ -113,7 +126,10 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_alignLeft="@+id/tipLabelTextView"
+            android:layout_below="@+id/tipLabelTextView"
+            />
 
         <TextView
             android:id="@+id/totalAmountTextView"
@@ -123,107 +139,122 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:layout_span="3"/>
+            android:layout_alignBottom="@+id/separatorLine"
+            android:layout_alignStart="@+id/roundingRadioGroup" />
 
-    </TableRow>
-    <!-- END Total -->
 
-    <!-- Separator Line -->
-    <View
-        android:id="@+id/separatorLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:padding="5dp"
-        android:background="@android:color/black" />
-    <!-- END Separator Line -->
+        <!-- END Total -->
 
-    <!-- Rounding -->
+        <!-- Separator Line -->
+        <View
+            android:id="@+id/separatorLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:padding="5dp"
+            android:background="@android:color/black"
+            android:layout_alignLeft="@+id/totalLabelTextView"
+            android:layout_below="@+id/totalLabelTextView"
+            />
+        <!-- END Separator Line -->
 
-    <TextView
-        android:id="@+id/roundingLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rounding"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:gravity="center"
-        />
+        <!-- Rounding -->
 
-    <RadioGroup
-        android:id="@+id/roundingRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-
-        <RadioButton
-            android:id="@+id/noneRadioButton"
+        <TextView
+            android:id="@+id/roundingLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/noneRadioButtonText"
+            android:text="@string/rounding"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_alignLeft="@+id/separatorLine"
+            android:layout_below="@+id/separatorLine"
             />
 
-        <RadioButton
-            android:id="@+id/tipRadioButton"
+        <RadioGroup
+            android:id="@+id/roundingRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tipRadioButtonText"
-            />
+            android:layout_below="@+id/totalLabelTextView"
+            android:layout_toRightOf="@+id/billAmountTextView"
+            android:padding="10dp">
 
-        <RadioButton
-            android:id="@+id/totalRadioButton"
+            <RadioButton
+                android:id="@+id/noneRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/noneRadioButtonText"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/tipRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tipRadioButtonText"
+                />
+
+            <RadioButton
+                android:id="@+id/totalRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/totalRadioButtonText"
+                />
+
+        </RadioGroup>
+        <!-- END Rounding -->
+
+        <!-- Split Bill -->
+        <TextView
+            android:id="@+id/splitLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/totalRadioButtonText"
+            android:padding="10dp"
+            android:text="@string/split_bill"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_alignLeft="@+id/roundingLabelTextView"
+            android:layout_below="@+id/roundingRadioGroup"
             />
 
-    </RadioGroup>
-    <!-- END Rounding -->
-    <!-- Split Bill -->
-    <TextView
-        android:id="@+id/splitLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/split_bill"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        />
+        <Spinner
+            android:id="@+id/splitBillSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/splitLabelTextView"
+            android:layout_alignStart="@+id/billAmountEditText"
+            android:layout_above="@+id/perPersonLabelTextView"
+            android:layout_alignEnd="@+id/roundingRadioGroup" />
 
-    <Spinner
-        android:id="@+id/splitBillSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <TextView
+            android:id="@+id/perPersonLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/per_person"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_alignLeft="@+id/splitLabelTextView"
+            android:layout_below="@+id/splitLabelTextView"
+            />
 
-    <TextView
-        android:id="@+id/perPersonLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/per_person"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
+        <TextView
+            android:id="@+id/perPersonAmountLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/zeroDollarsPerPerson"
+            android:textSize="20sp"
+            android:layout_alignBaseline="@+id/perPersonLabelTextView"
+            android:layout_alignBottom="@+id/perPersonLabelTextView"
+            android:layout_alignEnd="@+id/splitBillSpinner"
+            android:layout_toEndOf="@+id/perPersonLabelTextView" />
+        <!-- END Split Bill -->
 
-    <TextView
-        android:id="@+id/perPersonAmountLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/zeroDollarsPerPerson"
-        android:textSize="20sp"
-        />
-    <!-- END Split Bill -->
-
-    <!-- Apply Button -->
-
-    <Button
-        android:id="@+id/applyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/applyPerPerson"
-        />
+        <!-- Apply Button -->
 
 
-</TableLayout>
+    </RelativeLayout>
+
+</ScrollView>
